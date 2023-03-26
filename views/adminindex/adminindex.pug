@@ -1,0 +1,33 @@
+extends ../common/common
+block admin 
+    div(class="dvs",id="main",style="width:800px;height:600px;border:1px solid #ccc;margin:10px auto")
+    input(type="hidden",id='num',value=`${data}`)
+    script.
+        const myEcharts = echarts.init(document.getElementById('main'))
+
+        let arr = document.getElementById('num').value;
+        
+        arr = arr.split(',')
+
+        let option = {
+             title: {
+                text: '外面平台后端各项数据'
+            },
+            tooltip: {},
+            legend: {
+                data: ['数量']
+            },
+            xAxis: {
+                data: ['管理员人数', '会员人数', '商家人数', '订单量']
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '数量',
+                    type: 'bar',
+                    data: arr
+                }
+            ]
+        }
+        
+        myEcharts.setOption(option)

@@ -1,0 +1,10 @@
+本项目是基于node+mysql搭建的后台管理系统
+使用前注意：
+1.搭建node环境，将yuliner.sql文件导入数据库
+2.node init初始化node
+3.node install 下载node_modules文件
+4.node server.js或者nodemon server.js启动项目
+5.浏览器访问地址http://127.0.0.1:8000/admin/login
+管理员名：admin
+密码：123
+6.mysql无密码，另有阿里oss云储存，需要自己完成相应的配置，配置位置router/adminfoods.js   router/adminshop.js

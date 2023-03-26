@@ -1,0 +1,93 @@
+extends ../common/common
+block admin 
+ .mws-panel.grid_8
+  .mws-panel-header
+    span
+      i.icon-table
+      |  商家列表
+  .mws-panel-body.no-padding
+    #DataTables_Table_0_wrapper.dataTables_wrapper(role='grid')
+      #DataTables_Table_0_length.dataTables_length
+        label
+          | Show 
+          select(size='1' name='DataTables_Table_0_length' aria-controls='DataTables_Table_0')
+            option(value='10' selected='selected') 10
+            option(value='25') 25
+            option(value='50') 50
+            option(value='100') 100
+          |  entries
+      #DataTables_Table_0_filter.dataTables_filter
+        label
+          | Search: 
+          input(type='text' aria-controls='DataTables_Table_0')
+      table#DataTables_Table_0.mws-datatable.mws-table.dataTable(aria-describedby='DataTables_Table_0_info')
+        thead
+          tr(role='row')
+            th.sorting_asc(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-sort='ascending' aria-label='Rendering engine: activate to sort column descending' style='width: 189px;') 序号
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Browser: activate to sort column ascending' style='width: 247px;') 店铺名
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Platform(s): activate to sort column ascending' style='width: 228px;') 品牌Logo
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 宣传语
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 配送费
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 操作
+        tbody(role='alert' aria-live='polite' aria-relevant='all')
+          -for(let v of datas)
+            tr.odd
+              td #{v.id}
+              td #{v.shopname}
+              td 
+                img(src=`https://cyfirst.oss-cn-beijing.aliyuncs.com/${v.logo}`, alt="" width='100px')
+              td #{v.content}
+              td  ￥ #{v.fee}
+              td 
+                a(href=`/admin/shopdel?id=${v.id}` class="btn btn-danger") 删除
+                a(href=`/admin/shopupdata?id=${v.id}` class="btn btn-info") 修改
+              
+
+      #DataTables_Table_1_paginate.dataTables_paginate.paging_full_numbers
+      button
+        span(id='prev') 上一页
+      //- 页码按钮
+      span(id='pages')
+      button
+        span(id='next') 下一页
+      span(style="color:white") 总条数:#{count}
+      span(style="color:white") 当前页:#{pages}
+      script(type='text/javascript').
+        //- // 总条数
+        var count=#{count};
+        //- // 当前的页码-1
+        var page=#{page}; 
+        //- let page=(req.query.page==undefined)?0:req.query.page;
+        //- console.log(count,page)
+        //- // 获取页面的位置
+        var pages=document.getElementById('pages');
+        var prev=document.getElementById('prev');
+        var next=document.getElementById('next');
+        //- // 生成页码 22=>5
+        function createPages() {
+            pages.innerHTML='';
+            for(var i=0;i<Math.ceil(count/2);i++){
+              let a =(page==i) ? 'btn-success' :'btn-danger'
+              pages.innerHTML+=`<button class="btn ${a}" json-page="${i}" style="background-color:((${page}==${i}) ? 'green' :'white')">${i+1}</button>`;
+            }
+          }
+        createPages()
+        //- // 点击按钮翻页
+        $('.btn').on('click',function(){
+          let page=$(this).attr('json-page');
+          window.location.href='/admin/shoplist?page='+page;
+        })
+        //- // 点击上一页
+        prev.onclick=function(){
+          if(page>=1){
+            page--;
+            window.location.href='/admin/shoplist?page='+page;
+          }
+        }
+        //- // 点击下一页
+        next.onclick=function(){
+          if(page<Math.ceil(count/2)-1){
+            page++;
+            window.location.href='/admin/shoplist?page='+page;
+          }
+        }

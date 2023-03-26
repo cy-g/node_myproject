@@ -1,0 +1,51 @@
+extends ../common/common
+block admin 
+ .mws-panel.grid_8
+  .mws-panel-header
+    span
+      i.icon-table
+      |  商家食品管理
+  .mws-panel-body.no-padding
+    #DataTables_Table_0_wrapper.dataTables_wrapper(role='grid')
+      #DataTables_Table_0_length.dataTables_length
+        label
+          | Show 
+          select(size='1' name='DataTables_Table_0_length' aria-controls='DataTables_Table_0')
+            option(value='10' selected='selected') 10
+            option(value='25') 25
+            option(value='50') 50
+            option(value='100') 100
+          |  entries
+      #DataTables_Table_0_filter.dataTables_filter
+        label
+          | Search: 
+          input(type='text' aria-controls='DataTables_Table_0')
+      table#DataTables_Table_0.mws-datatable.mws-table.dataTable(aria-describedby='DataTables_Table_0_info')
+        thead
+          tr(role='row')
+            th.sorting_asc(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-sort='ascending' aria-label='Rendering engine: activate to sort column descending' style='width: 189px;') 序号
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Browser: activate to sort column ascending' style='width: 247px;') 商品名称
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 食品描述
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 价格
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 商品图片
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 店铺名
+            th.sorting(role='columnheader' tabindex='0' aria-controls='DataTables_Table_0' rowspan='1' colspan='1' aria-label='Engine version: activate to sort column ascending' style='width: 164px;') 操作
+        tbody(role='alert' aria-live='polite' aria-relevant='all')
+          -for(let v of data)
+            tr.odd
+              td #{v.id}
+              td #{v.foodname}
+              td #{v.descr}
+              td  ￥ #{v.price}
+              td 
+                img(src=`https://cyfirst.oss-cn-beijing.aliyuncs.com/${v.foodpic}`, alt="" width='100px')
+              td #{v.shopname}  
+              td 
+                a(href=`/admin/foodsdel?id=${v.id}` class="btn btn-danger") 删除
+                a(href=`/admin/foodsupdata?id=${v.id}` class="btn btn-info") 修改
+              
+
+      #DataTables_Table_0_info.dataTables_info 
+      #DataTables_Table_0_paginate.dataTables_paginate.paging_two_button
+        a#DataTables_Table_0_previous.paginate_disabled_previous(tabindex='0' role='button' aria-controls='DataTables_Table_0') Previous
+        a#DataTables_Table_0_next.paginate_enabled_next(tabindex='0' role='button' aria-controls='DataTables_Table_0') Next

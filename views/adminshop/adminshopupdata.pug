@@ -1,0 +1,34 @@
+extends ../common/common
+block admin 
+ .mws-panel.grid_8
+  .mws-panel-header
+    span 商品添加
+  .mws-panel-body.no-padding
+    form.mws-form(action='/admin/shopdoupdata' method='POST' enctype='multipart/form-data')
+      .mws-form-inline
+        .mws-form-row
+          label.mws-form-label 店铺名
+          .mws-form-item
+            input.medium(type='text' name="uname" value=`${datas.shopname}`)
+        .mws-form-row
+          label.mws-form-label 品牌旧Logo
+          .mws-form-item
+            img(src=`https://cyfirst.oss-cn-beijing.aliyuncs.com/${datas.logo}`, alt="")
+        .mws-form-row
+          label.mws-form-label 品牌新Logo
+          .mws-form-item
+            input.medium(type='file' name="logo")
+        .mws-form-row
+          label.mws-form-label 宣传语
+          .mws-form-item
+            input.medium(type='text' name="content" value=`${datas.content}`)
+        .mws-form-row
+          label.mws-form-label 配送费
+          .mws-form-item
+            input.medium(type='text' name="fee" value=`${datas.fee}`)
+      .mws-button-row
+        input(type="hidden" name='id',value=`${datas.id}`)
+        input.btn.btn-danger(type='submit' value='修改')
+        input.btn(type='reset' value='点击重置')
+
+
